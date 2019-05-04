@@ -153,13 +153,10 @@ for cpname in computeNodeNames:
         if generateIPs:
             iface.addAddress(RSpec.IPv4Address(get_next_ipaddr(mgmtlan.client_id),
                                            get_netmask(mgmtlan.client_id)))
-            pass
-        pass
     cpnode.addService(RSpec.Install(url=TBURL, path="/tmp"))
-    cpnode.addService(RSpec.Execute(shell="sh",command=TBCMD))
+    cpnode.addService(RSpec.Execute("/bin/bash", TBCMD))
     rspec.addResource(cpnode)
     computeNodeList += cpname + ' '
-    pass
 
 rspec.addResource(mgmtlan)
 
