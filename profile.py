@@ -58,10 +58,10 @@ pc.verifyParameters()
 
 firstNode = "%s-%d" % (params.computeHostBaseName,1)
 tourDescription = \
-        "Hello!!"
+        "Default Ubuntu Profile"
 
 tourInstructions = \
-  "Log in with your cloudlab account, authenticating by SSH public key. Follow instructions given by login message."
+  "Log in with your cloudlab account, authenticating by SSH public key."
 
 #
 # Setup the Tour info with the above description and instructions.
