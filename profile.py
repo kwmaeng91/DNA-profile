@@ -24,8 +24,7 @@ pc.defineParameter("archType","Architecture Type",
                    portal.ParameterType.STRING,"x86_64",[("x86_64","Intel x86_64")],
                    longDescription="Intel x86_64 for the system architecture type.")
 pc.defineParameter("OSType","OS Type",
-                   portal.ParameterType.STRING,"ubuntu16_04",[("ubuntu16_04","Ubuntu 16.04")],
-                   portal.ParameterType.STRING,"ubuntu18_04",[("ubuntu18_04","Ubuntu 18.04")],
+                   portal.ParameterType.STRING,"ubuntu16_04",[("ubuntu16_04","Ubuntu 16.04"), ("ubuntu18_04", "Ubuntu 18.04")],
                    longDescription="Ubuntu for the OS distribution.")
 pc.defineParameter("node_type", "Hardware spec of nodes <br> Refer to manuals at <a href=\"http://docs.aptlab.net/hardware.html#%28part._apt-cluster%29\">APT</a> for more details.",
          portal.ParameterType.NODETYPE, "c6420", legalValues=[("c6420", "Clem c6420"), ("c8220", "Clem c8220"), ("c6320","Clem c6320"), ("c220g5", "Wisc c220g5"), ("c4130","Clem c4130 (GPU)"), ("c240g5","Wisc c240g5 (GPU)")], advanced=False, groupId=None)
