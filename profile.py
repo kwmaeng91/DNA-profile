@@ -156,7 +156,7 @@ for cpname in computeNodeNames:
             pass
         pass
     cpnode.addService(RSpec.Install(url=TBURL, path="/tmp"))
-    cpnode.addService(RSpec.Execute(shell="/bin/bash",command=TBCMD))
+    cpnode.addService(RSpec.Execute(shell="sh",command=TBCMD))
     rspec.addResource(cpnode)
     computeNodeList += cpname + ' '
     pass
