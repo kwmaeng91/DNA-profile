@@ -54,6 +54,6 @@ sudo sudo chown `whoami` /extra_disk
 #done
 
 # for passwordless ssh to take effect
-service ssh restart
+sudo service ssh restart
 
 reboot
