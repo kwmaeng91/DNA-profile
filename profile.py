@@ -9,7 +9,7 @@ import random
 
 # Don't want this as a param yet
 TBURL = "https://github.com/daehyeok-kim/DNA-profile/archive/master.tar.gz"
-TBCMD = "/tmp/DNA-profile-master/bin/node_install.sh | tee /tmp/node-setup.log.$(date +'%Y%m%d%H%M%S')"
+TBCMD = "/local/DNA-profile-master/bin/node_install.sh | tee /tmp/node-setup.log.$(date +'%Y%m%d%H%M%S')"
 
 rspec = RSpec.Request()
 
@@ -153,7 +153,7 @@ for cpname in computeNodeNames:
         if generateIPs:
             iface.addAddress(RSpec.IPv4Address(get_next_ipaddr(mgmtlan.client_id),
                                            get_netmask(mgmtlan.client_id)))
-    cpnode.addService(RSpec.Install(url=TBURL, path="/tmp"))
+    cpnode.addService(RSpec.Install(url=TBURL, path="/local"))
     cpnode.addService(RSpec.Execute("/bin/bash", TBCMD))
     rspec.addResource(cpnode)
     computeNodeList += cpname + ' '
