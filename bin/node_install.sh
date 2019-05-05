@@ -49,15 +49,13 @@ export DEBIAN_FRONTEND=noninteractive
 echo "MaxSessions 20" >> /etc/ssh/sshd_config
 
 apt-get update
-apt-get -y install software-properties-common
 add-apt-repository -y ppa:neovim-ppa/stable
 apt-get update
-apt-get install -y linux-tools-common linux-tools-$(uname -r)
-apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
 
 # for building
 apt-get install -y libtool autoconf automake build-essential vim htop tmux libnl-3-dev
 apt-get install -y libffi6 libffi-dev python-dev python-pip 
+apt-get -y install software-properties-common
 
 apt-get -y install build-essential
 apt-get -y install bcc bin86 gawk bridge-utils iproute libcurl3 libcurl4-openssl-dev bzip2 module-init-tools transfig tgif 
@@ -66,10 +64,8 @@ apt-get -y install iasl libbz2-dev e2fslibs-dev git-core uuid-dev ocaml ocaml-fi
 apt-get -y install libc6-dev-i386
 apt-get -y install lzma lzma-dev liblzma-dev
 apt-get -y install libsystemd-dev numactl
-sudo apt-get install neovim
-sudo apt-get install python-dev python-pip python3-dev python3-pip
-
-sudo apt-get update
+apt-get install neovim
+apt-get install python-dev python-pip python3-dev python3-pip
 
 mkdir /extra_disk
 /usr/local/etc/emulab/mkextrafs.pl /extra_disk

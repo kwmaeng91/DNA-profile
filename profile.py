@@ -8,7 +8,7 @@ import crypt
 import random
 
 TBURL = "https://github.com/daehyeok-kim/DNA-profile/archive/master.tar.gz"
-TBCMD = "sudo -H /local/DNA-profile-master/bin/node_install.sh | tee /local/node-setup.log.$(date +'%Y%m%d%H%M%S')"
+TBCMD = "sudo mkdir -p /root/setup && sudo -H /local/DNA-profile-master/bin/node_install.sh 2>&1 | sudo tee /root/setup/node-setup.log.$(date +'%Y%m%d%H%M%S')"
 
 rspec = RSpec.Request()
 
@@ -150,7 +150,7 @@ for cpname in computeNodeNames:
             iface.addAddress(RSpec.IPv4Address(get_next_ipaddr(mgmtlan.client_id),
                                            get_netmask(mgmtlan.client_id)))
     cpnode.addService(RSpec.Install(url=TBURL, path="/local"))
-    cpnode.addService(RSpec.Execute("/bin/bash", TBCMD))
+    cpnode.addService(RSpec.Execute("sh", TBCMD))
     rspec.addResource(cpnode)
     computeNodeList += cpname + ' '
 
