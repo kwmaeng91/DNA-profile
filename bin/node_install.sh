@@ -19,7 +19,9 @@ sudo apt-get -y install libsystemd-dev numactl
 
 sudo mkdir /extra_disk
 sudo /usr/local/etc/emulab/mkextrafs.pl /extra_disk
-sudo chown `whoami` /extra_disk
+sudo chown -R `whoami` /extra_disk
+
+HOSTS=$(cat /etc/hosts|grep cp-|awk '{print $4}'|sort)
 
 sudo sed -i 's/HostbasedAuthentication no/HostbasedAuthentication yes/' /etc/ssh/sshd_config
 sudo cat <<EOF | sudo tee -a /etc/ssh/ssh_config

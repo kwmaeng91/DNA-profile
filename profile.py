@@ -7,7 +7,6 @@ from lxml import etree as ET
 import crypt
 import random
 
-# Don't want this as a param yet
 TBURL = "https://github.com/daehyeok-kim/DNA-profile/archive/master.tar.gz"
 TBCMD = "/local/DNA-profile-master/bin/node_install.sh | tee /local/node-setup.log.$(date +'%Y%m%d%H%M%S')"
 
@@ -20,9 +19,6 @@ pc = portal.Context()
 
 pc.defineParameter("computeNodeCount", "Number of compute nodes",
                    portal.ParameterType.INTEGER, 1)
-pc.defineParameter("archType","Architecture Type",
-                   portal.ParameterType.STRING,"x86_64",[("x86_64","Intel x86_64")],
-                   longDescription="Intel x86_64 for the system architecture type.")
 pc.defineParameter("OSType","OS Type",
                    portal.ParameterType.STRING,"ubuntu16_04",[("ubuntu16_04","Ubuntu 16.04"), ("ubuntu18_04", "Ubuntu 18.04")],
                    longDescription="Ubuntu for the OS distribution.")
