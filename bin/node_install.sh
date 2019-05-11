@@ -64,8 +64,8 @@ apt-get -y install iasl libbz2-dev e2fslibs-dev git-core uuid-dev ocaml ocaml-fi
 apt-get -y install libc6-dev-i386
 apt-get -y install lzma lzma-dev liblzma-dev
 apt-get -y install libsystemd-dev numactl
-apt-get install neovim
-apt-get install python-dev python-pip python3-dev python3-pip
+apt-get -y install neovim
+apt-get -y install python-dev python-pip python3-dev python3-pip
 
 mkdir /extra_disk
 /usr/local/etc/emulab/mkextrafs.pl /extra_disk
