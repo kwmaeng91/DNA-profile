@@ -118,4 +118,4 @@ service ssh restart
 # done
 rm -f $SETUPFLAG
 
-reboot
+#reboot
