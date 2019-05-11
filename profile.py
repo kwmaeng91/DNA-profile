@@ -8,7 +8,7 @@ import crypt
 import random
 
 TBURL = "https://github.com/daehyeok-kim/DNA-profile/archive/master.tar.gz"
-TBCMD = "sudo mkdir -p /root/setup && sudo -H /local/DNA-profile-master/bin/node_install.sh 2>&1 | sudo tee /root/setup/node-setup.log.$(date +'%Y%m%d%H%M%S')"
+TBCMD = "sudo mkdir -p /root/setup && sudo -H /tmp/DNA-profile-master/bin/node_install.sh 2>&1 | sudo tee /root/setup/node-setup.log.$(date +'%Y%m%d%H%M%S')"
 
 rspec = RSpec.Request()
 
