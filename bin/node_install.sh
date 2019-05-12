@@ -22,7 +22,7 @@ cat <<EOF | tee /etc/profile.d/firstboot.sh > /dev/null
 
 if [ -f $SETUPFLAG ]; then
   echo "*******************************************"
-  echo "RDMA setup in progress. Wait until complete"
+  echo "Node setup in progress. Wait until complete"
   echo "before installing any packages"
   echo "*******************************************"
 elif [ -f $FLAG ]; then
@@ -42,15 +42,6 @@ fi
 EOF
 chmod +x /etc/profile.d/firstboot.sh
 
-cp /tmp/setup/phase2-setup.sh /usr/local/bin/phase2-setup.sh 
-cp /tmp/setup/pmem-setup.sh /usr/local/bin/pmem-setup.sh 
-cp /tmp/setup/accelio-setup.sh /usr/local/bin/accelio-setup.sh 
-cp /tmp/setup/grappa-setup.sh /usr/local/bin/grappa-setup.sh 
-chmod +x /usr/local/bin/phase2-setup.sh
-chmod +x /usr/local/bin/pmem-setup.sh
-chmod +x /usr/local/bin/accelio-setup.sh
-chmod +x /usr/local/bin/grappa-setup.sh
-
 export DEBIAN_FRONTEND=noninteractive
 #sed -i -r 's/GRUB_CMDLINE_LINUX_DEFAULT=\"(.*)\"/GRUB_CMDLINE_LINUX_DEFAULT=\"\1 processor.max_cstate=1 intel_idle.max_cstate=0 default_hugepagesz=1GB hugepagesz=1G hugepages=4\"/' /etc/default/grub
 #sed -i -r 's/GRUB_CMDLINE_LINUX_DEFAULT=\"(.*)\"/GRUB_CMDLINE_LINUX_DEFAULT=\"\1 processor.max_cstate=1 intel_idle.max_cstate=0 \"/' /etc/default/grub
@@ -64,8 +55,6 @@ apt-get update
 apt-get -y install software-properties-common
 add-apt-repository -y ppa:neovim-ppa/stable
 apt-get update
-apt-get install -y linux-tools-common linux-tools-$(uname -r)
-apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
 
 # for building
 apt-get install -y libtool autoconf automake build-essential vim htop tmux libnl-3-dev
