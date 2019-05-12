@@ -9,8 +9,8 @@ import random
 
 # Don't want this as a param yet
 TBURL = "https://github.com/daehyeok-kim/DNA-profile/archive/master.tar.gz"
-TBCMD_default = "sudo mkdir -p /root/setup && sudo -H /tmp/DNA-profile-master/bin/node_install.sh 2>&1 | sudo tee /root/setup/phase1-setup.log.$(date +'%Y%m%d%H%M%S')"
-TBCMD_rdma = "sudo mkdir -p /root/setup && sudo -H /tmp/DNA-profile-master/bin/node_rdma_install.sh 2>&1 | sudo tee /root/setup/phase1-setup.log.$(date +'%Y%m%d%H%M%S')"
+TBCMD_default = "sudo mkdir -p /root/setup && sudo -H /tmp/DNA-profile-master/bin/node_install.sh 2>&1 | sudo tee /root/setup/node-setup.log.$(date +'%Y%m%d%H%M%S')"
+TBCMD_rdma = "sudo mkdir -p /root/setup && sudo -H /tmp/DNA-profile-master/bin/node_rdma_install.sh 2>&1 | sudo tee /root/setup/node-setup.log.$(date +'%Y%m%d%H%M%S')"
 
 #
 # Create our in-memory model of the RSpec -- the resources we're going to request
