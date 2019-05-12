@@ -69,15 +69,13 @@ apt-get -y install gettext libpixman-1-dev libaio-dev markdown pandoc python-num
 apt-get -y install libc6-dev-i386
 apt-get -y install lzma lzma-dev liblzma-dev
 apt-get -y install libsystemd-dev numactl
-sudo apt-get install neovim
-sudo apt-get install python-dev python-pip python3-dev python3-pip
+apt-get -y install neovim
+apt-get -y install python-dev python-pip python3-dev python3-pip
 
 sudo apt-get update
 
-
 mkdir /extra_disk
 /usr/local/etc/emulab/mkextrafs.pl /extra_disk
-chown dkim /extra_disk
 
 # set the amount of locked memory. will require a reboot
 cat <<EOF  | tee /etc/security/limits.d/90-rmda.conf > /dev/null

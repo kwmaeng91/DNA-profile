@@ -27,14 +27,11 @@ pc = portal.Context()
 #
 pc.defineParameter("computeNodeCount", "Number of compute nodes",
                    portal.ParameterType.INTEGER, 1)
-pc.defineParameter("archType","Architecture Type",
-                   portal.ParameterType.STRING,"x86_64",[("x86_64","Intel x86_64")],
-                   longDescription="Intel x86_64 for the system architecture type.")
 pc.defineParameter("OSType","OS Type",
                    portal.ParameterType.STRING,"ubuntu",[("ubuntu","Ubuntu")],
                    longDescription="Ubuntu for the OS distribution.")
 pc.defineParameter("node_type", "Hardware spec of nodes <br> Refer to manuals at <a href=\"http://docs.aptlab.net/hardware.html#%28part._apt-cluster%29\">APT</a> for more details.",
-         portal.ParameterType.NODETYPE, "c6420", legalValues=[("c6420", "Clem c6420"), ("c220g1","Wisconsin c220g1"), ("c220g2", "Wisconsin c220g2"), ("c8220", "Clem c8220"), ("c6320","Clem c6320"), ("c4130","Clem c4130 (GPU)")], advanced=False, groupId=None)
+         portal.ParameterType.NODETYPE, "c6420", legalValues=[("c220g5","Wisc c220g5"), ("c240g5", "Wisc c240g5 (GPU)")], advanced=False, groupId=None)
 pc.defineParameter("computeHostBaseName", "Base name of compute node(s)",
                    portal.ParameterType.STRING, "cp", advanced=True,
                    longDescription="The base string of the short name of the compute nodes (node names will look like cp-1, cp-2, ... You shold leave this alone unless you really want the hostname to change.")
