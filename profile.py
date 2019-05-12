@@ -72,7 +72,7 @@ tourDescription = \
         "Default Ubuntu profile"
 
 tourInstructions = \
-  "Log in with your cloudlab account, authenticating by SSH public key.
+  "Log in with your cloudlab account, authenticating by SSH public key."
 
 #
 # Setup the Tour info with the above description and instructions.
