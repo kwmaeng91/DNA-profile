@@ -7,9 +7,14 @@ from lxml import etree as ET
 import crypt
 import random
 
+# Don't want this as a param yet
 TBURL = "https://github.com/daehyeok-kim/DNA-profile/archive/master.tar.gz"
-TBCMD = "sudo mkdir -p /root/setup && sudo -H /tmp/DNA-profile-master/bin/node_install.sh 2>&1 | sudo tee /root/setup/node-setup.log.$(date +'%Y%m%d%H%M%S')"
+TBCMD = "sudo mkdir -p /root/setup && sudo -H /tmp/DNA-profile-master/bin/node_install.sh 2>&1 | sudo tee /root/setup/phase1-setup.log.$(date +'%Y%m%d%H%M%S')"
 
+#
+# Create our in-memory model of the RSpec -- the resources we're going to request
+# in our experiment, and their configuration.
+#
 rspec = RSpec.Request()
 
 #
@@ -17,13 +22,19 @@ rspec = RSpec.Request()
 #
 pc = portal.Context()
 
+#
+# Define *many* parameters; see the help docs in geni-lib to learn how to modify.
+#
 pc.defineParameter("computeNodeCount", "Number of compute nodes",
                    portal.ParameterType.INTEGER, 1)
+pc.defineParameter("archType","Architecture Type",
+                   portal.ParameterType.STRING,"x86_64",[("x86_64","Intel x86_64")],
+                   longDescription="Intel x86_64 for the system architecture type.")
 pc.defineParameter("OSType","OS Type",
-                   portal.ParameterType.STRING,"ubuntu16_04",[("ubuntu16_04","Ubuntu 16.04"), ("ubuntu18_04", "Ubuntu 18.04")],
+                   portal.ParameterType.STRING,"ubuntu",[("ubuntu","Ubuntu")],
                    longDescription="Ubuntu for the OS distribution.")
 pc.defineParameter("node_type", "Hardware spec of nodes <br> Refer to manuals at <a href=\"http://docs.aptlab.net/hardware.html#%28part._apt-cluster%29\">APT</a> for more details.",
-         portal.ParameterType.NODETYPE, "c6420", legalValues=[("c6420", "Clem c6420"), ("c8220", "Clem c8220"), ("c6320","Clem c6320"), ("c220g5", "Wisc c220g5"), ("c4130","Clem c4130 (GPU)"), ("c240g5","Wisc c240g5 (GPU)")], advanced=False, groupId=None)
+         portal.ParameterType.NODETYPE, "c6420", legalValues=[("c6420", "Clem c6420"), ("c220g1","Wisconsin c220g1"), ("c220g2", "Wisconsin c220g2"), ("c8220", "Clem c8220"), ("c6320","Clem c6320"), ("c4130","Clem c4130 (GPU)")], advanced=False, groupId=None)
 pc.defineParameter("computeHostBaseName", "Base name of compute node(s)",
                    portal.ParameterType.STRING, "cp", advanced=True,
                    longDescription="The base string of the short name of the compute nodes (node names will look like cp-1, cp-2, ... You shold leave this alone unless you really want the hostname to change.")
@@ -40,11 +51,18 @@ params = pc.bindParameters()
 #
 # Verify our parameters and throw errors.
 #
+
+if params.computeNodeCount > 10:
+    perr = portal.ParameterWarning("Do you really need more than 8 compute nodes?  Think of your fellow users scrambling to get nodes :).",['computeNodeCount'])
+    pc.reportWarning(perr)
+    pass
+
 if params.ipAllocationStrategy == 'script':
     generateIPs = True
 else:
     generateIPs = False
     pass
+
 
 #
 # Give the library a chance to return nice JSON-formatted exception(s) and/or
@@ -54,10 +72,10 @@ pc.verifyParameters()
 
 firstNode = "%s-%d" % (params.computeHostBaseName,1)
 tourDescription = \
-        "Default Ubuntu Profile"
+        "Hello!!"
 
 tourInstructions = \
-  "Log in with your cloudlab account, authenticating by SSH public key."
+  "Log in with your cloudlab account, authenticating by SSH public key. Follow instructions given by login message."
 
 #
 # Setup the Tour info with the above description and instructions.
@@ -73,6 +91,7 @@ rspec.addTour(tour)
 # addresses for the nodes, so set up some quick, brutally stupid IP address
 # generation for each LAN.
 #
+
 ipdb = {}
 ipdb['mgmt-lan'] = { 'base':'192.168','netmask':'255.255.0.0','values':[-1,-10,0,0] }
 
@@ -124,13 +143,19 @@ mgmtlan.best_effort = True
 #
 # Construct the disk image URNs we're going to set the various nodes to load.
 #
-x86_ubuntu16_disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
-x86_ubuntu18_disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 
-if params.OSType == 'ubuntu16_04':
-    chosenDiskImage = x86_ubuntu16_disk_image
-elif params.OSType == 'ubuntu18_04':
-    chosenDiskImage = x86_ubuntu18_disk_image
+x86_ubuntu_disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-64-STD'
+x86_centos_disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS71-64-STD'
+arm_disk_image = 'urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU14-64-ARM'
+
+if params.OSType == 'centos':
+  chosenDiskImage = x86_centos_disk_image
+elif params.OSType == 'ubuntu':
+  if params.archType == 'x86_64':
+    chosenDiskImage = x86_ubuntu_disk_image
+  elif params.archType == 'arm':
+    chosenDiskImage = arm_disk_image
+
 
 computeNodeNames = []
 computeNodeList = ""
@@ -149,10 +174,14 @@ for cpname in computeNodeNames:
         if generateIPs:
             iface.addAddress(RSpec.IPv4Address(get_next_ipaddr(mgmtlan.client_id),
                                            get_netmask(mgmtlan.client_id)))
+            pass
+        pass
     cpnode.addService(RSpec.Install(url=TBURL, path="/tmp"))
-    cpnode.addService(RSpec.Execute("sh", TBCMD))
+    cpnode.addService(RSpec.Execute(shell="sh",command=TBCMD))
     rspec.addResource(cpnode)
     computeNodeList += cpname + ' '
+    pass
+
 
 rspec.addResource(mgmtlan)
 
