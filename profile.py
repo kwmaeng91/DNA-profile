@@ -145,13 +145,8 @@ x86_ubuntu_disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU16-6
 x86_centos_disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS71-64-STD'
 arm_disk_image = 'urn:publicid:IDN+utah.cloudlab.us+image+emulab-ops:UBUNTU14-64-ARM'
 
-if params.OSType == 'centos':
-  chosenDiskImage = x86_centos_disk_image
-elif params.OSType == 'ubuntu':
-  if params.archType == 'x86_64':
+if params.OSType == 'ubuntu':
     chosenDiskImage = x86_ubuntu_disk_image
-  elif params.archType == 'arm':
-    chosenDiskImage = arm_disk_image
 
 
 computeNodeNames = []
