@@ -8,7 +8,7 @@ import crypt
 import random
 
 # Don't want this as a param yet
-TBURL = "https://github.com/daehyeok-kim/DNA-profile/archive/master.tar.gz"
+TBURL = "https://github.com/kwmaeng91/DNA-profile/archive/master.tar.gz"
 TBCMD_default = "sudo mkdir -p /root/setup && sudo -H /tmp/DNA-profile-master/bin/node_install.sh 2>&1 | sudo tee /root/setup/node-setup.log.$(date +'%Y%m%d%H%M%S')"
 TBCMD_rdma = "sudo mkdir -p /root/setup && sudo -H /tmp/DNA-profile-master/bin/node_rdma_install.sh 2>&1 | sudo tee /root/setup/node-setup.log.$(date +'%Y%m%d%H%M%S')"
 
