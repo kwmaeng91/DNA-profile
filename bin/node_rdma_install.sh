@@ -74,7 +74,7 @@ apt-get -y install python-dev python-pip python3-dev python3-pip
 apt-get update
 
 # for OFED
-wget http://www.mellanox.com/downloads/ofed/MLNX_OFED-4.1-1.0.2.0/MLNX_OFED_LINUX-4.2-1.0.2.0-ubuntu14.04-x86_64.tgz
+wget http://www.mellanox.com/downloads/ofed/MLNX_OFED-4.1-1.0.2.0/MLNX_OFED_LINUX-4.1-1.0.2.0-ubuntu14.04-x86_64.tgz
 tar xfz ./MLNX_OFED_LINUX-4.1-1.0.2.0-ubuntu14.04-x86_64.tgz
 sudo ./MLNX_OFED_LINUX-4.1-1.0.2.0-ubuntu14.04-x86_64/mlnxofedinstall --all --force
 
