@@ -58,10 +58,10 @@ apt-get update
 
 # for building
 apt-get install -y libtool autoconf automake build-essential vim htop tmux libnl-3-dev
-apt-get install -y libffi6 libffi-dev python-dev python-pip 
+apt-get install -y libffi6 libffi-dev python-dev python-pip
 
 apt-get -y install build-essential
-apt-get -y install bcc bin86 gawk bridge-utils iproute libcurl3 libcurl4-openssl-dev bzip2 module-init-tools transfig tgif 
+apt-get -y install bcc bin86 gawk bridge-utils iproute libcurl3 libcurl4-openssl-dev bzip2 module-init-tools transfig tgif
 apt-get -y install make gcc libc6-dev zlib1g-dev python python-dev python-twisted libncurses5-dev patch libvncserver-dev libsdl-dev libjpeg-dev
 apt-get -y install iasl libbz2-dev e2fslibs-dev git-core uuid-dev ocaml ocaml-findlib libx11-dev bison flex xz-utils libyajl-dev
 apt-get -y install gettext libpixman-1-dev libaio-dev markdown pandoc python-numpy
@@ -80,9 +80,6 @@ sudo ./MLNX_OFED_LINUX-3.4-1.0.0.0-ubuntu14.04-x86_64/mlnxofedinstall --all --fo
 
 echo "options mlx4_core log_num_mgm_entry_size=-1" >> /etc/modprobe.d/mlnx.conf
 /etc/init.d/openibd  restart
-
-mkdir /extra_disk
-/usr/local/etc/emulab/mkextrafs.pl /extra_disk
 
 # set the amount of locked memory. will require a reboot
 cat <<EOF  | tee /etc/security/limits.d/90-rmda.conf > /dev/null
