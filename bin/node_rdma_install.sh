@@ -65,11 +65,8 @@ apt-get -y install bcc bin86 gawk bridge-utils iproute libcurl3 libcurl4-openssl
 apt-get -y install make gcc libc6-dev zlib1g-dev python python-dev python-twisted libncurses5-dev patch libvncserver-dev libsdl-dev libjpeg-dev
 apt-get -y install iasl libbz2-dev e2fslibs-dev git-core uuid-dev ocaml ocaml-findlib libx11-dev bison flex xz-utils libyajl-dev
 apt-get -y install gettext libpixman-1-dev libaio-dev markdown pandoc python-numpy
-apt-get -y install libc6-dev-i386
-apt-get -y install lzma lzma-dev liblzma-dev
-apt-get -y install libsystemd-dev numactl
-apt-get -y install neovim
-apt-get -y install python-dev python-pip python3-dev python3-pip
+apt-get -y install libc6-dev-i386 lzma lzma-dev liblzma-dev libsystemd-dev numactl
+apt-get -y install neovim python-dev python-pip python3-dev python3-pip lxc
 
 apt-get update
 
@@ -80,6 +77,27 @@ sudo ./MLNX_OFED_LINUX-3.4-1.0.0.0-ubuntu14.04-x86_64/mlnxofedinstall --all --fo
 
 echo "options mlx4_core log_num_mgm_entry_size=-1" >> /etc/modprobe.d/mlnx.conf
 /etc/init.d/openibd  restart
+
+mkdir /extra_disk
+
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sdb
+  o # clear the in memory partition table
+  n # new partition
+  p # primary partition
+  1 # partition number 1
+    # default - start at beginning of disk
+    # default
+  w # write the partition table
+  q # and we're done
+EOF
+
+mkfs.ext4 /dev/sdb1
+mount /dev/sdb1 /extra_disk
+
+mkdir /extra_disk/lxc
+
+touch /etc/lxc/lxc.conf
+echo "lxc.lxcpath=/extra_disk/lxc" >> /etc/lxc/lxc.conf
 
 # set the amount of locked memory. will require a reboot
 cat <<EOF  | tee /etc/security/limits.d/90-rmda.conf > /dev/null
